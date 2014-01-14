@@ -2,7 +2,7 @@
 
 =head1 NAME
 
- Hooks::Customers::Tools::Redirects - Hook file which adds redirects in customers's vhost files for the i-MSCP tools
+ Hooks::Apache2::Tools::Redirects - Hook file which adds redirects in customers's vhost files for the i-MSCP tools
 
 =cut
 
@@ -29,10 +29,7 @@
 # @link        http://i-mscp.net i-MSCP Home Site
 # @license     http://www.gnu.org/licenses/gpl-2.0.html GPL v2
 
-# Hook file which  to add redirects for i-MSCP tools in customers vhost files
-# Hook file compatible with i-MSCP >= 1.1.0
-
-package Hooks::Customers::Tools::Redirects;
+package Hooks::Apache2::Tools::Redirects;
 
 use iMSCP::HooksManager;
 use iMSCP::TemplateParser;
