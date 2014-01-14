@@ -1,4 +1,9 @@
-hookfiles
-=========
+i-MSCP Hook Files Repository
+============================
 
-Repository which contain hook files for i-MSCP
+This repository holds i-MSCP hook files.
+
+A hook file is a file containing pieces of code, which allow to customize i-MSCP.
+
+
+**i-MSCP Team**
