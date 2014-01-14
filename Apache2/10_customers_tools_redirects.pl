@@ -2,7 +2,7 @@
 
 =head1 NAME
 
- Hooks::Customers::Tools::Redirects - Hook file which add redirects for i-MSCP tools in customers vhosts
+ Hooks::Customers::Tools::Redirects - Hook file which adds redirects in customers's vhost files for the i-MSCP tools
 
 =cut
 
@@ -39,7 +39,7 @@ use iMSCP::TemplateParser;
 
 =head1 DESCRIPTION
 
- Hook file which add redirects for i-MSCP tools in customers vhost.
+ Hook file which adds redirects in customers's vhost files for the i-MSCP tools.
 
  Hook file compatible with i-MSCP >= 1.1.0
 
