@@ -5,7 +5,6 @@ This repository holds i-MSCP hook files.
 
 A hook file is a file containing pieces of code, which allow to customize i-MSCP.
 
-
 ##Howto Install a hook file
 
   - Download the hook file into the **/etc/imscp/hooks.d** directory
