@@ -36,7 +36,6 @@ use warnings;
 
 no if $] >= 5.017011, warnings => 'experimental::smartmatch';
 
-use iMSCP::Debug;
 use iMSCP::HooksManager;
 use Servers::httpd;
 
@@ -84,8 +83,7 @@ sub overrideServerAlias
 	0;
 }
 
-my $hooksManager = iMSCP::HooksManager->getInstance();
-$hooksManager->register('afterHttpdBuildConf', \&overrideServerAlias);
+iMSCP::HooksManager->getInstance()->register('afterHttpdBuildConf', \&overrideServerAlias);
 
 =back
 
