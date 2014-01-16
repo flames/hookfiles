@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-    Hooks::Apache2::ServerAliasOverride;
+    Hooks::Apache2::ServerAliasOverride Hook file allowing to add additional alias domains in the virtual host of a domain
  
 =cut
 
