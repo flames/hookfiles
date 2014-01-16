@@ -2,12 +2,12 @@
 
 =head1 NAME
 
- Hooks::Apache2::Tools::Redirects - Hook file which adds redirects in customers's vhost files for the i-MSCP tools
+ Hooks::Apache2::Tools::Redirects
 
 =cut
 
 # i-MSCP - internet Multi Server Control Panel
-# Copyright (C) 2010-2014 by Laurent Declercq
+# Copyright (C) 2013-2014 by Laurent Declercq
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -24,7 +24,7 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 #
 # @category    i-MSCP
-# @copyright   2010-2014 by Laurent Declercq
+# @copyright   2013-2014 by Laurent Declercq
 # @author      Laurent Declercq <l.declercq@nuxwin.com>
 # @link        http://i-mscp.net i-MSCP Home Site
 # @license     http://www.gnu.org/licenses/gpl-2.0.html GPL v2

@@ -24,8 +24,6 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 #
 # @category i-MSCP
-# @package iMSCP_Plugin
-# @subpackage ServerAliasOverride
 # @copyright 2013-2014 by i-MSCP | http://i-mscp.net
 # @author Sascha Bay <info@space2place.de>
 # @link http://i-mscp.net i-MSCP Home Site
@@ -88,5 +86,13 @@ sub overrideServerAlias
 
 my $hooksManager = iMSCP::HooksManager->getInstance();
 $hooksManager->register('afterHttpdBuildConf', \&overrideServerAlias);
+
+=back
+
+=head1 AUTHOR
+
+ Sascha Bay <info@space2place.de>
+
+=cut
 
 1;
