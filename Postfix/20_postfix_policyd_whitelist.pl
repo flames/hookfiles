@@ -2,12 +2,12 @@
 
 =head1 NAME
 
-    Hooks::Postfix::PolicydWhitelist - Hook file adds the policyd whitelist to the i-MSCP MTA (Postfix)
+    Hooks::Postfix::Policyd::Whitelist
  
 =cut
 
 # i-MSCP - internet Multi Server Control Panel
-# Copyright (C) 2010-2014 by Laurent Declercq
+# Copyright (C) 2010-2014 by Sascha Bay
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -29,7 +29,7 @@
 # @link http://i-mscp.net i-MSCP Home Site
 # @license http://www.gnu.org/licenses/gpl-2.0.html GPL v2
 
-package Hooks::Postfix::PolicydWhitelist;
+package Hooks::Postfix::Policyd::Whitelist;
  
 use strict;
 use warnings;
@@ -59,11 +59,11 @@ my $checkRecipientAccess = "\n                               check_recipient_acc
 
 =over 4
 
-=item onAfterMtaBuildPolicydWhitelist
+=item onAfterMtaBuildPolicydWhitelist($tplContent)
 
  Policyd Whitelist directive
 
- Param ref $tplContent Reference to template content
+ Param scalar_ref $tplContent Reference to template content
  Return int 0
 
 =cut
@@ -71,12 +71,11 @@ my $checkRecipientAccess = "\n                               check_recipient_acc
 sub onAfterMtaBuildPolicydWhitelist
 {
 	my $tplContent = shift;
-	
-	my ($stdout, $stderr);
-	my $rs = 0;
+
 	if (-f $policydWeightClientWhitelist) {
 		if (-f $policydWeightRecipientWhitelist) {
-			$rs = execute('/usr/sbin/postmap '.$policydWeightClientWhitelist, \$stdout, \$stderr);
+			my ($stdout, $stderr);
+			my $rs = execute('/usr/sbin/postmap '.$policydWeightClientWhitelist, \$stdout, \$stderr);
 			debug($stdout) if $stdout;
 			error($stderr) if $stderr && $rs;
 			return $rs if $rs;
@@ -89,18 +88,19 @@ sub onAfterMtaBuildPolicydWhitelist
 			if ($$tplContent !~ /check_client_access/m) {
 				$$tplContent =~ s/reject_non_fqdn_recipient,/reject_non_fqdn_recipient,$checkClientAccess/m;
 			}
+
 			if ($$tplContent !~ /check_recipient_access/m) {
 				$$tplContent =~ s/reject_non_fqdn_recipient,/reject_non_fqdn_recipient,$checkRecipientAccess/m;
 			}
 		} else {
-			error("File: ".$policydWeightRecipientWhitelist." not found");
+			error("File $policydWeightRecipientWhitelist not found");
 			return 1;
 		}
 	} else {
-		error("File: ".$policydWeightClientWhitelist." not found");
-        	return 1;
+		error("File: $policydWeightClientWhitelist not found");
+		return 1;
 	}
-	
+
 	0;
 }
 
@@ -109,8 +109,8 @@ iMSCP::HooksManager->getInstance()->register('afterMtaBuildMainCfFile', \&onAfte
 =back
  
 =head1 AUTHOR
- 
-Sascha Bay <info@space2place.de>
+
+ Sascha Bay <info@space2place.de>
  
 =cut
  
