@@ -64,7 +64,7 @@ my $checkRecipientAccess = "\n                               check_recipient_acc
  Policyd Whitelist directive
 
  Param scalar_ref $tplContent Reference to template content
- Return int 0
+ Return int 0 on success other on failure
 
 =cut
 
