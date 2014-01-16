@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-    Hooks::Apache2::ServerAliasOverride Hook file allowing to add additional alias domains in the virtual host of a domain
+    Hooks::Apache2::ServerAlias::Override
  
 =cut
 
@@ -32,7 +32,7 @@
 # @link http://i-mscp.net i-MSCP Home Site
 # @license http://www.gnu.org/licenses/gpl-2.0.html GPL v2
 
-package Hooks::Apache2::ServerAliasOverride;
+package Hooks::Apache2::ServerAlias::Override;
 
 use strict;
 use warnings;
