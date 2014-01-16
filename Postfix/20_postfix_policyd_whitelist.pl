@@ -68,7 +68,7 @@ my $checkRecipientAccess = "\n                               check_recipient_acc
 
 =cut
 
-sub onAfterMtaBuildPolicydWhitelist
+sub onAfterMtaBuildPolicydWhitelist($)
 {
 	my $tplContent = shift;
 
