@@ -75,12 +75,12 @@ sub onAfterMtaBuildPolicydWhitelist
 	if (-f $policydWeightClientWhitelist) {
 		if (-f $policydWeightRecipientWhitelist) {
 			my ($stdout, $stderr);
-			my $rs = execute('/usr/sbin/postmap '.$policydWeightClientWhitelist, \$stdout, \$stderr);
+			my $rs = execute("/usr/sbin/postmap $policydWeightClientWhitelist", \$stdout, \$stderr);
 			debug($stdout) if $stdout;
 			error($stderr) if $stderr && $rs;
 			return $rs if $rs;
 			 
-			$rs = execute('/usr/sbin/postmap '.$policydWeightRecipientWhitelist, \$stdout, \$stderr);
+			$rs = execute("/usr/sbin/postmap $policydWeightRecipientWhitelist", \$stdout, \$stderr);
 			debug($stdout) if $stdout;
 			error($stderr) if $stderr && $rs;
 			return $rs if $rs;
