@@ -2,12 +2,12 @@
 
 =head1 NAME
 
-    Plugins::Http::ServerAliasOverride;
+    Hooks::Apache2::ServerAliasOverride;
  
 =cut
 
 # i-MSCP - internet Multi Server Control Panel
-# Copyright (C) 2010-2013 by internet Multi Server Control Panel
+# Copyright (C) 2010-2014 by internet Multi Server Control Panel
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -26,17 +26,19 @@
 # @category i-MSCP
 # @package iMSCP_Plugin
 # @subpackage ServerAliasOverride
-# @copyright 2010-2013 by i-MSCP | http://i-mscp.net
+# @copyright 2010-2014 by i-MSCP | http://i-mscp.net
 # @author Laurent Declercq <l.declercq@nuxwin.com>
 # @contributor Sascha Bay <info@space2place.de>
 # @link http://i-mscp.net i-MSCP Home Site
 # @license http://www.gnu.org/licenses/gpl-2.0.html GPL v2
 
-package Plugins::Http::ServerAliasOverride;
+package Hooks::Apache2::ServerAliasOverride;
 
 use strict;
 use warnings;
- 
+
+no if $] >= 5.017011, warnings => 'experimental::smartmatch';
+
 use iMSCP::Debug;
 use iMSCP::HooksManager;
 use Servers::httpd;
@@ -68,8 +70,6 @@ my $addServerAlias = 'example'; # Add more than one alias (example example-2 exa
 
 =cut
 
-my $hooksManager = iMSCP::HooksManager->getInstance();
-
 sub overrideServerAlias
 {
 	my ($tplFileContent, $tplFileName) = @_;
@@ -87,6 +87,7 @@ sub overrideServerAlias
 	0;
 }
 
+my $hooksManager = iMSCP::HooksManager->getInstance();
 $hooksManager->register('afterHttpdBuildConf', \&overrideServerAlias);
 
 1;
