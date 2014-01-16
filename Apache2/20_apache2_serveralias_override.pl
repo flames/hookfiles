@@ -37,7 +37,6 @@ use warnings;
 no if $] >= 5.017011, warnings => 'experimental::smartmatch';
 
 use iMSCP::HooksManager;
-use Servers::httpd;
 
 # Configuration variables.
 my $searchDomain = 'example.com';
@@ -68,10 +67,9 @@ my $addServerAlias = 'example'; # Add more than one alias (example example-2 exa
 
 sub overrideServerAlias
 {
-	my ($tplFileContent, $tplFileName) = @_;
-	
-	my $httpd = Servers::httpd->factory();
-	my $domainName = (defined $httpd->{'data'}->{'DOMAIN_NAME'}) ? $httpd->{'data'}->{'DOMAIN_NAME'} : undef;
+	my ($tplFileContent, $tplFileName, $data) = @_;
+
+	my $domainName = (defined $data->{'DOMAIN_NAME'}) ? $data->{'DOMAIN_NAME'} : undef;
 
 	if(
 		$domainName && $domainName eq $searchDomain &&
