@@ -84,7 +84,7 @@ sub onAfterMtaBuildPolicydWhitelist($)
 			debug($stdout) if $stdout;
 			error($stderr) if $stderr && $rs;
 			return $rs if $rs;
-			
+
 			if ($$tplContent !~ /check_client_access/m) {
 				$$tplContent =~ s/reject_non_fqdn_recipient,/reject_non_fqdn_recipient,$checkClientAccess/m;
 			}
