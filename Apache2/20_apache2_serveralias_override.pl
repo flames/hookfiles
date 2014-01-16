@@ -59,11 +59,12 @@ my $addServerAlias = 'example'; # Add more than one alias (example example-2 exa
 
 =item overrideServerAlias(\$tplFileContent, $tplFileName, \%data)
 
+ Override ServerAlias directive
+
  Param scalar_ref $tplFileContent Reference to template content
  Param scalar $tplFileName Template filename
  Param hash_ref $data Reference to a hash containing domain data
  Adds additional alias domains in the virtual host
-
  Return int 0
 
 =cut
