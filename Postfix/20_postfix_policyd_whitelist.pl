@@ -59,7 +59,7 @@ my $checkRecipientAccess = "\n                               check_recipient_acc
 
 =over 4
 
-=item onAfterMtaBuildPolicydWhitelist($tplContent)
+=item onAfterMtaBuildPolicydWhitelist(\$tplContent)
 
  Policyd Whitelist directive
 
