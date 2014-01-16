@@ -24,7 +24,7 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 #
 # @category i-MSCP
-# @copyright 2013-2014 by i-MSCP | http://i-mscp.net
+# @copyright 2013-2014 Sascha Bay
 # @author Sascha Bay <info@space2place.de>
 # @link http://i-mscp.net i-MSCP Home Site
 # @license http://www.gnu.org/licenses/gpl-2.0.html GPL v2
