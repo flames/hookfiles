@@ -57,15 +57,18 @@ my $addServerAlias = 'example'; # Add more than one alias (example example-2 exa
 
 =over 4
 
-=item
+=item overrideServerAlias(\$tplFileContent, $tplFileName, \%data)
 
+ Param scalar_ref $tplFileContent Reference to template content
+ Param scalar $tplFileName Template filename
+ Param hash_ref $data Reference to a hash containing domain data
  Adds additional alias domains in the virtual host
 
- Return int 0 on success, other on failure
+ Return int 0
 
 =cut
 
-sub overrideServerAlias
+sub overrideServerAlias($$$)
 {
 	my ($tplFileContent, $tplFileName, $data) = @_;
 
