@@ -7,7 +7,7 @@
 =cut
 
 # i-MSCP - internet Multi Server Control Panel
-# Copyright (C) 2010-2014 by internet Multi Server Control Panel
+# Copyright (C) 2013-2014 by Sascha Bay
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -26,9 +26,8 @@
 # @category i-MSCP
 # @package iMSCP_Plugin
 # @subpackage ServerAliasOverride
-# @copyright 2010-2014 by i-MSCP | http://i-mscp.net
-# @author Laurent Declercq <l.declercq@nuxwin.com>
-# @contributor Sascha Bay <info@space2place.de>
+# @copyright 2013-2014 by i-MSCP | http://i-mscp.net
+# @author Sascha Bay <info@space2place.de>
 # @link http://i-mscp.net i-MSCP Home Site
 # @license http://www.gnu.org/licenses/gpl-2.0.html GPL v2
 
