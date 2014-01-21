@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-    Hooks::Postfix::BCC::Maps
+    Hooks::Postfix::BCC::Map
  
 =cut
 
@@ -29,7 +29,7 @@
 # @link http://i-mscp.net i-MSCP Home Site
 # @license http://www.gnu.org/licenses/gpl-2.0.html GPL v2
 
-package Hooks::Postfix::BCC::Maps;
+package Hooks::Postfix::BCC::Map;
  
 use strict;
 use warnings;
