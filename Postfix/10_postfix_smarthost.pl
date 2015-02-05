@@ -1,71 +1,60 @@
-#!/usr/bin/perl
-
-=head1 NAME
-
- Hooks::Postfix::Smarthost
-=cut
-
-# i-MSCP - internet Multi Server Control Panel
-# Copyright (C) 2013-2014 by Laurent Declercq
+# i-MSCP Listener::Postfix::Smarthost listener file
+# Copyright (C) 2015 Laurent Declercq <l.declercq@nuxwin.com>
 #
-# This program is free software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License
-# as published by the Free Software Foundation; either version 2
-# of the License, or (at your option) any later version.
+# This library is free software; you can redistribute it and/or
+# modify it under the terms of the GNU Lesser General Public
+# License as published by the Free Software Foundation; either
+# version 2.1 of the License, or (at your option) any later version.
 #
-# This program is distributed in the hope that it will be useful,
+# This library is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-# GNU General Public License for more details.
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# Lesser General Public License for more details.
 #
-# You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-#
-# @category    i-MSCP
-# @copyright   2013-2014 by Laurent Declercq
-# @author      Lauren Declercq <l.declercq@nuxwin.com>
-# @link        http://i-mscp.net i-MSCP Home Site
-# @license     http://www.gnu.org/licenses/gpl-2.0.html GPL v2
+# You should have received a copy of the GNU Lesser General Public
+# License along with this library; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
 
-package Hooks::Postfix::Smarthost;
+#
+## Listener file allowing to configure the i-MSCP MTA (Postfix) as smarthost with SASL authentication.
+#
+
+package Listener::Postfix::Smarthost;
 
 use iMSCP::Debug;
-use iMSCP::HooksManager;
+use iMSCP::ProgramFinder;
+use iMSCP::EventManager;
 use iMSCP::Execute;
 use iMSCP::File;
-use Servers::mta;
 
-# Configuration variables.
-my $relayhost = 'smtp.host.tld';
+#
+## Configuration parameters
+#
+
+my $relayhost = 'relayhost.tld';
 my $relayport = '587';
-my $saslAuthUser = '';
-my $saslAuthPasswd = '';
+my $saslAuthUser = 'relayuser';
+my $saslAuthPasswd = 'relaypass';
 my $saslPasswdMapsPath = '/etc/postfix/relay_passwd';
 
-=head1 DESCRIPTION
+# Path to Postfix configuration directory
+my $postfixConfigDir = '/etc/postfix';
 
- Hook file allowing to configure the i-MSCP MTA (Postfix) as smarthost with SASL authentication.
+## Postfix main.cf ( see http://www.postfix.org/postconf.5.html )
+# Hash where each pair of key/value correspond to a postfix parameter
+# Please replace the entries below by your own entries
+my %mainCfParameters = (
+	'relayhost' => $relayhost.':'.$relayport,
+	'smtp_sasl_auth_enable' => 'yes',
+	'smtp_sasl_password_maps' => 'hash:'.$saslPasswdMapsPath,
+	'smtp_sasl_security_options' => 'noanonymous'
+);
 
- How to install:
- - Edit configuration variables above
- - Put this file into the /etc/imscp/hooks.d directory (create it if it doesn't exists)
- - Make this file only readable by root user (chmod 0600);
+#
+## Please, don't edit anything below this line
+#
 
- Hook file compatible with i-MSCP >= 1.1.0
-
-=head1 PUBLIC METHODS
-
-=over 4
-
-=item
-
- Create SMTP SASL password maps
-
- Return int 0 on success, other on failure
-
-=cut
-
+#Create SMTP SASL password maps. Return int 0 on success, other on failure
 sub createSaslPasswdMaps
 {
 	my $saslPasswdMapsFile = iMSCP::File->new('filename' => $saslPasswdMapsPath);
@@ -83,40 +72,32 @@ sub createSaslPasswdMaps
 	0;
 }
 
-=item configureSmartHost()
-
- Add relayhost and SMTP SASL parameters in Postfix main.cf
-
- Return int 0
-
-=cut
-
-sub configureSmartHost
+#Add relayhost and SMTP SASL parameters in Postfix main.cf
+sub setupMainCf
 {
-	my $fileContent = shift;
+	if(%mainCfParameters && iMSCP::ProgramFinder::find('postconf')) {
+		my @cmd = (
+			'postconf',
+			'-e', # Needed for Postfix < 2.8
+			'-c', escapeShell($postfixConfigDir)
+		);
 
-	$$fileContent .= <<EOF;
+		push @cmd, ($_ . '=' . escapeShell($mainCfParameters{$_})) for keys %mainCfParameters;
 
-# Added by Hooks::Postfix::Smarthost
-relayhost=$relayhost:$relayport
-smtp_sasl_auth_enable=yes
-smtp_sasl_password_maps=hash:$saslPasswdMapsPath
-smtp_sasl_security_options=noanonymous
-EOF
+		my ($stdout, $stderr);
+		my $rs = execute("@cmd", \$stdout, \$stderr);
+		debug($stdout) if $stdout;
+		error($stderr) if $stderr && $rs;
+		return $rs if $rs;
+	}
 
 	0;
 }
 
-my $hooksManager = iMSCP::HooksManager->getInstance();
-$hooksManager->register('afterMtaBuildMainCfFile', \&createSaslPasswdMaps);
-$hooksManager->register('afterMtaBuildMainCfFile', \&configureSmartHost);
-
-=back
-
-=head1 AUTHOR
-
- Laurent Declercq <l.declercq@nuxwin.com>
-
-=cut
+# Register event listeners on the event manager
+my $eventManager = iMSCP::EventManager->getInstance();
+$eventManager->register('afterMtaBuildConf', \&createSaslPasswdMaps);
+$eventManager->register('afterMtaBuildConf', \&setupMainCf);
 
 1;
+__END__
